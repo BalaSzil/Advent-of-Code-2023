@@ -72,40 +72,6 @@ def get_all_numbers(list_of_digit_positions):
                 
     # print(list_of_numbers)
     return list_of_numbers
-            
-
-# def find_number_in_list(list_of_numbers):
-#     list_of_number_positions = []
-#     list_of_previous_numbers = []
-    
-#     for number in list_of_numbers:
-        
-#         if number not in list_of_previous_numbers:
-#             list_of_previous_numbers.append(number)
-#             for item in data_list:
-#                 number_starting_position = item.find(number)
-#                 if number_starting_position != -1 and number_starting_position + len(number) == "." or number_starting_position != -1 and number_starting_position + len(number) in list_of_special_characters or number_starting_position != -1 and number_starting_position + len(number) <= len(item) or number_starting_position != -1 and len(number) == 1:
-#                     list_of_number_positions.append(number_starting_position)
-#                     break
-                
-#         elif number in list_of_previous_numbers:
-#             number_of_previous_occurances = list_of_previous_numbers.count(number)
-            
-#             for item in data_list:
-#                 if number_of_previous_occurances > 0:
-#                     is_it_found = item.find(number)
-#                     if is_it_found != -1:
-#                         number_of_previous_occurances -= 1
-                        
-#                 elif number_of_previous_occurances == 0:
-#                     number_starting_position = item.find(number)
-#                     if number_starting_position != -1 and number_starting_position + len(number) == "." or number_starting_position != -1 and number_starting_position + len(number) in list_of_special_characters or number_starting_position != -1 and number_starting_position + len(number) <= len(item) or number_starting_position != -1 and len(number) == 1:
-#                         number_of_previous_occurances -= 1
-#                         list_of_previous_numbers.append(number)
-#                         list_of_number_positions.append(number_starting_position)
-#                         break
-    
-#     return (list_of_number_positions, list_of_previous_numbers)
 
 def check_for_duplication_of_numbers(list_of_numbers):
     check_list = []
@@ -171,21 +137,29 @@ def get_list_of_final_numbers():
                         continue
                         
                     elif number_of_previous_occurances == 0:
+                        
+                        
                         list_of_previous_numbers.append(number)
-                        number_position = item.find(number)
-                        if check_if_special_character_before_examined_number(number, number_position, item):
-                            list_of_final_numbers.append(number)
+                        
+                        if check_if_it_is_entire_number(item, number):
+                            number_position = item.find(number)
+                            
+                            if check_if_special_character_before_examined_number(number, number_position, item):
+                                list_of_final_numbers.append(number)
+                                break
+                            elif check_if_special_character_after_examined_number(number, number_position, item):
+                                list_of_final_numbers.append(number)
+                                break
+                            elif check_if_special_character_above_examined_number(number, number_position, item_position):
+                                list_of_final_numbers.append(number)
+                                break
+                            elif check_if_special_character_below_examined_number(number, number_position, item_position):
+                                list_of_final_numbers.append(number)
+                                break
                             break
-                        elif check_if_special_character_after_examined_number(number, number_position, item):
-                            list_of_final_numbers.append(number)
-                            break
-                        elif check_if_special_character_above_examined_number(number, number_position, item_position):
-                            list_of_final_numbers.append(number)
-                            break
-                        elif check_if_special_character_below_examined_number(number, number_position, item_position):
-                            list_of_final_numbers.append(number)
-                            break
-                        break
+                        
+                        else:
+                            continue
 
     return list_of_final_numbers
     
@@ -300,8 +274,6 @@ list_of_digit_positions = get_digit_positions(data_list)
 list_of_numbers = get_all_numbers(list_of_digit_positions)
 # check_for_duplication_of_numbers(list_of_numbers)
 # print(list_of_numbers)
-# (list_of_number_positions, list_of_previous_numbers) = find_number_in_list(list_of_numbers)
-# print(list_of_number_positions)
 list_of_final_numbers = get_list_of_final_numbers()
 check_for_duplication_of_numbers(list_of_final_numbers)
 # print(list_of_final_numbers)
